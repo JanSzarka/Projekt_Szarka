@@ -1,4 +1,21 @@
+<?php
+    include_once "parts/functions.php";
+
+    use Projekt_Szarka\DataLoader;
+
+    $dataLoader = new DataLoader("data/data.json");
+
+    try {
+        $slides = $dataLoader->getSection('slides');
+    } catch (Exception $e) {
+        $slides = [];
+    }
+?>
+
+
+
 <!DOCTYPE html>
+
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -37,13 +54,23 @@
 					<div class="page">
 						<div class="row">
 							<div class="col-md-9">
-								<div class="slider">
-									<ul class="slides">
-										<li><a href="#"><img src="dummy/slide-1.jpg" alt="Slide 1"></a></li>
-										<li><a href="#"><img src="dummy/slide-2.jpg" alt="Slide 2"></a></li>
-										<li><a href="#"><img src="dummy/slide-3.jpg" alt="Slide 3"></a></li>
-									</ul>
-								</div>
+
+                                <div class="slider">
+                                    <ul class="slides">
+                                        <?php
+                                        for ($i = 0, $len = count($slides); $i < $len; $i++) {
+                                            $slide = $slides[$i];
+                                            ?>
+                                            <li>
+                                                <a href="#"><img src="<?= htmlspecialchars($slide['src']) ?>" alt="<?= htmlspecialchars($slide['alt']) ?>"></a>
+                                            </li>
+                                            <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
+
+
 							</div>
 							<div class="col-md-3">
 								<div class="row">

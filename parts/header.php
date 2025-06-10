@@ -1,4 +1,18 @@
-	<header class="site-header">
+<?php
+    require_once "functions.php";
+
+    use Projekt_Szarka\DataLoader;
+
+    $dataLoader = new DataLoader("data/data.json");
+
+    try {
+        $navItems = $dataLoader->getSection('navbar');
+    } catch (Exception $e) {
+        $navItems = [];
+    }
+?>
+
+<header class="site-header">
 				<div class="container">
 					<a href="index.html" id="branding">
 						<img src="images/logo.png" alt="" class="logo">
@@ -8,22 +22,22 @@
 						</div>
 					</a> <!-- #branding -->
 
-					<div class="main-navigation">
-						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
-						<ul class="menu">
-							<li class="menu-item"><a href="index.php">Home</a></li>
-							<li class="menu-item current-menu-item"><a href="about.php">About</a></li>
-							<li class="menu-item"><a href="review.php">Movie reviews</a></li>
-							<li class="menu-item"><a href="joinus.php">Join us</a></li>
-							<li class="menu-item"><a href="contact.php">Contact</a></li>
-						</ul> <!-- .menu -->
-
-						<form action="#" class="search-form">
-							<input type="text" placeholder="Search...">
-							<button><i class="fa fa-search"></i></button>
-						</form>
-					</div> <!-- .main-navigation -->
-
-					<div class="mobile-navigation"></div>
-				</div>
-			</header>
+                    <div class="main-navigation">
+                        <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+                        <ul class="menu">
+                            <?php
+                            for ($i = 0, $len = count($navItems); $i < $len; $i++) {
+                                $item = $navItems[$i];
+                                ?>
+                                <li class="menu-item<?= (basename($_SERVER['SCRIPT_NAME']) === $item['url']) ? ' current-menu-item' : '' ?>">
+                                    <a href="<?= htmlspecialchars($item['url']) ?>">
+                                        <?= htmlspecialchars($item['label']) ?>
+                                    </a>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                        </ul> <!-- .menu -->
+                    </div> <!-- .main-navigation -->
+                </div>
+</header>
