@@ -45,7 +45,7 @@ class DataLoader
     class Database
     {
         private $host = "localhost";
-        private $db_name = 'users';
+        private $db_name;
         private $username = "root";
         private $password = "";
         private $port = "3306";
@@ -54,8 +54,10 @@ class DataLoader
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         );
         private $conn;
-        public function __construct()
+
+        public function __construct($db_name = "data")
         {
+            $this->db_name = $db_name;
             $this->connect();
         }
 
@@ -103,7 +105,7 @@ class DataLoader
             $sql = "INSERT INTO accounts (username, password) VALUES (:username, :password)";
             $statement = $this->connection->prepare($sql);
             try{
-                $insert = $statement->execute(array(':username' => $username, ':password' => $hashedPassword));
+                $statement->execute(array(':username' => $username, ':password' => $hashedPassword));
                 return "Account created successfully.";
             }catch(Exception $e){
                 http_response_code(500);
@@ -136,6 +138,126 @@ class DataLoader
             return true;
 
         }
+
+    }
+
+    class Movie extends Database{
+
+        protected $connection;
+
+        public function __construct(){
+            parent::__construct();
+            $this->connection = $this->getConnection();
+        }
+
+        public function newMovie($name, $rating, $date, $category, $imagePath){
+            $sqlCheck = "SELECT COUNT(*) FROM movies WHERE name = :name";
+            $stmtCheck = $this->connection->prepare($sqlCheck);
+            $stmtCheck->execute([':name' => $name]);
+            $count = $stmtCheck->fetchColumn();
+
+            if ($count > 0) {
+                return "<p> Review already exists. </p>";
+            }
+
+            $sql = "INSERT INTO movies (name, rating, date, category, image) VALUES (:name, :rating, :date, :category, :image)";
+            $stmt = $this->connection->prepare($sql);
+
+            try {
+                $stmt->execute([
+                    ':name' => $name,
+                    ':rating' => $rating,
+                    ':date' => $date,
+                    ':category' => $category,
+                    ':image' => $imagePath
+                ]);
+
+                return "<p> Movie review added successfully! <p>";
+            } catch (PDOException $e) {
+                return "<p> Error: " . $e->getMessage() . "<p>";
+            }
+
+
+        }
+
+        public function updateMovie($id, $name, $rating, $date, $category, $imagePath) {
+            $sqlCheck = "SELECT COUNT(*) FROM movies WHERE id = :id";
+            $stmtCheck = $this->connection->prepare($sqlCheck);
+            $stmtCheck->execute([':id' => $id]);
+            $count = $stmtCheck->fetchColumn();
+
+            if ($count === 0) {
+                return "<p> Review doesnt exists. </p>";
+            }
+
+            if ($imagePath === null){
+                $sqlGetImage = "SELECT image FROM movies WHERE id = :id";
+                $stmtGetImage = $this->connection->prepare($sqlGetImage);
+                $stmtGetImage->execute([':id' => $id]);
+                $currentImage = $stmtGetImage->fetchColumn();
+                $imagePath = $currentImage;
+            }
+
+            $sql = "UPDATE movies SET name = :name, rating = :rating, date = :date, category = :category, image = :image WHERE id = :id";
+            $stmt = $this->connection->prepare($sql);
+
+            try {
+                $stmt->execute([
+                    ':name' => $name,
+                    ':rating' => $rating,
+                    ':date' => $date,
+                    ':category' => $category,
+                    ':image' => $imagePath,
+                    ':id' => $id
+                ]);
+                return "<p> Movie review updated successfully! </p>";
+            } catch (PDOException $e) {
+                return "<p>" . $e->getMessage() . "</p>" ;
+            }
+        }
+
+        public function getID($name) {
+            $sql = "SELECT id FROM movies WHERE name = :name";
+            $stmt = $this->connection->prepare($sql);
+
+            try {
+                $stmt->execute([':name' => $name]);
+                return $stmt->fetchColumn();
+            } catch (PDOException $e) {
+                return "<p> Error: " . $e->getMessage() . "</p>";
+            }
+        }
+
+        public function deleteMovieByName($name){
+            $sql = "DELETE FROM movies WHERE name = :name";
+            $stmt = $this->connection->prepare($sql);
+
+            try {
+                $stmt->execute([':name' => $name]);
+                if ($stmt->rowCount() > 0) {
+                    return "<p> Movie deleted successfully! </p>";
+                } else {
+                    return "<p> Movie not found. </p>";
+                }
+            } catch (PDOException $e) {
+                return "<p>" . $e->getMessage() . "</p>" ;
+            }
+
+        }
+
+        public function getMovieByName($name) {
+            $sql = "SELECT * FROM movies WHERE name = :name";
+            $stmt = $this->connection->prepare($sql);
+
+            try {
+                $stmt->execute([':name' => $name]);
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
 
     }
 ?>

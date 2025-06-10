@@ -40,20 +40,7 @@
 							<span>Movie Review</span>
 						</div>
 
-						<div class="filters">
-							<select name="#" id="#" placeholder="Choose Category">
-								<option value="#">Action</option>
-								<option value="#">Drama</option>
-								<option value="#">Fantasy</option>
-								<option value="#">Horror</option>
-								<option value="#">Adventure</option>
-							</select>
-							<select name="#" id="#">
-								<option value="#">2012</option>
-								<option value="#">2013</option>
-								<option value="#">2014</option>
-							</select>
-						</div>
+
 						<div class="movie-list">
 							<div class="movie">
 								<figure class="movie-poster"><img src="dummy/thumb-3.jpg" alt="#"></figure>
@@ -97,15 +84,6 @@
 							</div>
 						</div> <!-- .movie-list -->
 
-						<div class="pagination">
-							<a href="#" class="page-number prev"><i class="fa fa-angle-left"></i></a>
-							<span class="page-number current">1</span>
-							<a href="#" class="page-number">2</a>
-							<a href="#" class="page-number">3</a>
-							<a href="#" class="page-number">4</a>
-							<a href="#" class="page-number">5</a>
-							<a href="#" class="page-number next"><i class="fa fa-angle-right"></i></a>
-						</div>
 					</div>
 				</div> <!-- .container -->
 			</main>
