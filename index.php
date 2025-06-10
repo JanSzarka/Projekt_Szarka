@@ -1,5 +1,5 @@
 <?php
-    include_once "parts/functions.php";
+    require_once "functions.php";
 
     use Projekt_Szarka\DataLoader;
 

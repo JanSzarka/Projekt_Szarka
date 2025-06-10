@@ -30,3 +30,86 @@ class DataLoader
     }
 }
 
+?>
+
+//DATABASE
+
+<?php
+    namespace Projekt_Szarka;
+
+    use PDO;
+    use PDOException;
+
+    class Database
+    {
+        private $host = "localhost";
+        private $db_name = 'users';
+        private $username = "root";
+        private $password = "";
+        private $port = "3306";
+        private $options = array(
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        );
+        private $conn;
+        public function __construct()
+        {
+            $this->connect();
+        }
+
+        protected function connect(){
+            try {
+                $this->conn = new PDO(
+                    "mysql:host={$this->host};dbname=" . $this->db_name . ";port={$this->port}",
+                    $this->username,
+                    $this->password,
+                    $this->options
+                );
+            } catch (PDOException $e) {
+                die("Connection failed: " . $e->getMessage());
+            }
+        }
+
+        public function getConnection(): ?PDO
+        {
+            return $this->conn;
+
+        }
+    }
+
+    class User extends Database{
+
+        protected $connection;
+
+        public function __construct(){
+            parent::__construct();
+            $this->connection = $this->getConnection();
+        }
+
+        public function SaveUser($username, $password){
+
+            $sqlCheck = "SELECT COUNT(*) FROM accounts WHERE username = :username";
+            $stmtCheck = $this->connection->prepare($sqlCheck);
+            $stmtCheck->execute([':username' => $username]);
+            $userExists = $stmtCheck->fetchColumn();
+
+            if ($userExists > 0) {
+                return "User with this name already exists.";
+            }
+
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $sql = "INSERT INTO accounts (username, password) VALUES (:username, :password)";
+            $statement = $this->connection->prepare($sql);
+            try{
+                $insert = $statement->execute(array(':username' => $username, ':password' => $hashedPassword));
+                return "Account created successfully.";
+            }catch(Exception $e){
+                http_response_code(500);
+                return false;
+            }
+
+
+        }
+
+    }
+?>

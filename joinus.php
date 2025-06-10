@@ -1,10 +1,12 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
-		
+
 		<title>Movie Review | Join Us</title>
 
 		<!-- Loading third party fonts -->
@@ -13,7 +15,7 @@
 
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="style.css">
-		
+
 		<!--[if lt IE 9]>
 		<script src="js/ie-support/html5.js"></script>
 		<script src="js/ie-support/respond.js"></script>
@@ -23,7 +25,7 @@
 
 
 	<body>
-		
+
 
 		<div id="site-content">
             <?php
@@ -32,53 +34,45 @@
                 echo"Failed to include $file_path";
             }
             ?>
-			<main class="main-content">
-				<div class="container">
-					<div class="page">
-						<div class="breadcrumbs">
-							<a href="index.php">Home</a>
-							<span>Join Us</span>
-						</div>
+            <main class="main-content">
+                <div class="container">
+                    <div class="page">
+                        <div class="breadcrumbs">
+                            <a href="index.php">Home</a>
+                            <span>Join Us</span>
+                        </div>
 
-						<div class="content">
-							<h2 class="section-title">Consectetur adipiscing elit sed eiusmod tempor</h2>
-							<p>Aenean vehicula eget risus sit amet posuere. Maecenas id risus maximus, malesuada leo eget, pellentesque arcu. Phasellus vitae leo rhoncus, consectetur mauris vitae, lacinia quam. Nunc turpis erat, accumsan eget justo quis, auctor ultricies magna. Mauris sodales, risus sit amet hendrerit tincidunt, erat ante facilisis sapien, sit amet maximus neque massa a felis. Nullam consectetur justo massa, vel commodo metus gravida in. Aliquam erat volutpat. Nullam a lorem sed lorem euismod gravida a eu velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis ac ligula vel pharetra. Aenean vitae nulla sed dui volutpat euismod.</p>
+                        <div class="content">
+                            <h2 class="section-title">Welcome to Our Community</h2>
+                            <p>Join us by logging into your account or signing up for a new one.</p>
 
-							<h2 class="section-title">Nemo enim ipsam voluptatem quia voluptas</h2>
-							<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga et harum quidem rerum facilis est et expedita.</p>
+                            <div class="row">
+                                <!-- Login Form -->
+                                <div class="col-md-6">
+                                    <div class="feature">
+                                        <h3 class="feature-title">Login</h3>
+                                        <form action="login.php" method="POST">
+                                            <div class="form-group">
+                                                <label for="login-username">Username:</label>
+                                                <input type="text" id="login-username" name="username" required class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="login-password">Password:</label>
+                                                <input type="password" id="login-password" name="password" required class="form-control">
+                                            </div>
+                                            <button type="submit" class="button">Log In</button>
+                                        </form>
+                                    </div>
+                                </div>
 
-							<p>Distinctio nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+                                <!-- Sign-Up Form -->
+                                <?php require_once "parts/signup.php" ?>
 
-							<div class="row">
-								<div class="col-md-4">
-									<div class="feature">
-										<h3 class="feature-title">Exceptur cupidat</h3>
-										<small class="feature-subtitle">Incididunt labore dolore</small>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum aut ad optio praesentium amet, ullam vel impedit dignissimos voluptas, consequatur recusandae quo autem consectetur tempore rem quam corrupti a. Accusamus.</p>
-										<a href="" class="button">Send a request</a>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="feature">
-										<h3 class="feature-title">Neque quisquam</h3>
-										<small class="feature-subtitle">Duis aute reprehenderit</small>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta aperiam quidem nobis rem exercitationem aut assumenda iure molestias eius accusantium, temporibus quis esse tempora. Laboriosam libero odio nobis, eligendi minus.</p>
-										<a href="" class="button">Send a request</a>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="feature">
-										<h3 class="feature-title">Tempor Labore</h3>
-										<small class="feature-subtitle">Ratione sequi nesciunt</small>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo commodi impedit ea beatae, in ipsa doloribus consequuntur ut, quod dolor dolore unde, esse eligendi autem nobis rem tempora recusandae laborum.</p>
-										<a href="" class="button">Send a request</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> <!-- .container -->
-			</main>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- .container -->
+            </main>
             <?php
             $file_path = "parts/footer.php";
             if(!include($file_path)) {
@@ -87,13 +81,13 @@
             ?>
 		</div>
 		<!-- Default snippet for navigation -->
-		
+
 
 
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/plugins.js"></script>
 		<script src="js/app.js"></script>
-		
+
 	</body>
 
 </html>
