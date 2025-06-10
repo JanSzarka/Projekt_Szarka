@@ -1,49 +1,37 @@
 <?php
-namespace Projekt_Szarka;
+    namespace Projekt_Szarka;
 
-class DataLoader
-{
-    private string $filepath;
-    private array $data = [];
-
-    public function __construct($filepath)
-    {
-        $this->filepath = $filepath;
-        $this->loadData();
-    }
-
-    private function loadData(): void
-    {
-        if (!file_exists($this->filepath)) {
-            throw new \Exception("JSON {$this->filepath} not found");
+    // Loading JSON
+    class DataLoader {
+        private string $filepath;
+        private array $data = [];
+        public function __construct($filepath) {
+            $this->filepath = $filepath;
+            $this->loadData();
         }
 
-        $json = file_get_contents($this->filepath);
-        $decoded = json_decode($json, true);
+        private function loadData(): void {
+            if (!file_exists($this->filepath)) {
+                throw new \Exception("JSON {$this->filepath} not found");
+            }
 
-        $this->data = $decoded;
+            $json = file_get_contents($this->filepath);
+            $decoded = json_decode($json, true);
+            $this->data = $decoded;
+        }
+
+        public function getSection($key): array {
+            return $this->data[$key] ?? [];
+        }
     }
 
-    public function getSection($key): array
-    {
-        return $this->data[$key] ?? [];
-    }
-}
-
-?>
-
-
-
-<?php
-    //DATABASE
-    namespace Projekt_Szarka;
+    //Database
 
     use mysql_xdevapi\Exception;
     use PDO;
     use PDOException;
 
-    class Database
-    {
+    class Database {
         private $host = "localhost";
         private $db_name;
         private $username = "root";
@@ -55,13 +43,12 @@ class DataLoader
         );
         private $conn;
 
-        public function __construct($db_name = "data")
-        {
+        public function __construct($db_name = "data"){
             $this->db_name = $db_name;
             $this->connect();
         }
 
-        protected function connect(){
+        protected function connect() {
             try {
                 $this->conn = new PDO(
                     "mysql:host={$this->host};dbname=" . $this->db_name . ";port={$this->port}",
@@ -74,15 +61,14 @@ class DataLoader
             }
         }
 
-        public function getConnection(): ?PDO
-        {
+        public function getConnection(): ?PDO {
             return $this->conn;
-
         }
     }
 
-    class User extends Database{
+    // User
 
+    class User extends Database{
         protected $connection;
 
         public function __construct(){
@@ -90,8 +76,7 @@ class DataLoader
             $this->connection = $this->getConnection();
         }
 
-        public function saveUser($username, $password){
-
+        public function saveUser($username, $password) {
             $sqlCheck = "SELECT COUNT(*) FROM accounts WHERE username = :username";
             $stmtCheck = $this->connection->prepare($sqlCheck);
             $stmtCheck->execute([':username' => $username]);
@@ -115,7 +100,7 @@ class DataLoader
 
         }
 
-        public function login($username, $password){
+        public function login($username, $password) {
             $sql = "SELECT * FROM accounts WHERE username = :username";
             $stmtCheck = $this->connection->prepare($sql);
             $stmtCheck->bindParam(':username', $username);
@@ -136,13 +121,12 @@ class DataLoader
             $_SESSION["username"] = $user["username"];
             $_SESSION["role"] = $user["type"];
             return true;
-
         }
-
     }
 
-    class Movie extends Database{
+    //Movies
 
+    class Movie extends Database {
         protected $connection;
 
         public function __construct(){
@@ -150,7 +134,7 @@ class DataLoader
             $this->connection = $this->getConnection();
         }
 
-        public function newMovie($name, $rating, $date, $category, $imagePath){
+        public function newMovie($name, $rating, $date, $category, $imagePath) {
             $sqlCheck = "SELECT COUNT(*) FROM movies WHERE name = :name";
             $stmtCheck = $this->connection->prepare($sqlCheck);
             $stmtCheck->execute([':name' => $name]);
@@ -176,8 +160,6 @@ class DataLoader
             } catch (PDOException $e) {
                 return "<p> Error: " . $e->getMessage() . "<p>";
             }
-
-
         }
 
         public function updateMovie($id, $name, $rating, $date, $category, $imagePath) {
@@ -216,6 +198,7 @@ class DataLoader
             }
         }
 
+        //Movie id
         public function getID($name) {
             $sql = "SELECT id FROM movies WHERE name = :name";
             $stmt = $this->connection->prepare($sql);
@@ -257,6 +240,7 @@ class DataLoader
             }
         }
 
+        //Movie reviews
         public function getAllReviewsHtml(): string {
             $output = '';
             $sql = "SELECT * FROM movies ORDER BY id DESC";
@@ -285,18 +269,17 @@ class DataLoader
 
     }
 
-    class Message extends Database
-    {
+
+    //Messages
+    class Message extends Database {
         protected $connection;
 
-        public function __construct()
-        {
+        public function __construct() {
             parent::__construct();
             $this->connection = $this->getConnection();
         }
 
-        public function saveMessage($name, $email, $message): null
-        {
+        public function saveMessage($name, $email, $message): null {
             $sql = "INSERT INTO messages (name, email, message) VALUES (:name, :email, :message)";
             $stmt = $this->connection->prepare($sql);
 

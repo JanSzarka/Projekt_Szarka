@@ -1,35 +1,34 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-require_once  __DIR__ . '/../functions.php';
-
-use Projekt_Szarka\User;
-
-$user = new User();
-$message = "";
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? '') === "login") {
-    try {
-        $username = $_POST["username"] ?? '';
-        $password = $_POST["password"] ?? '';
-        $loginSuccess = $user->login($username, $password);
-
-        if ($loginSuccess) {
-            header("Location: index.php");
-            exit;
-        } else {
-            $message = "Username or Password is incorrect";
-        }
-    } catch (Exception $e) {
-        $message = "An error occurred. Please try again.";
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
-}
-?>
 
-<?php if (!empty($message)): ?>
-    <p><?= htmlspecialchars($message) ?></p>
-<?php endif; ?>
+    require_once  __DIR__ . '/../functions.php';
+
+    use Projekt_Szarka\User;
+
+    $user = new User();
+    $message = "";
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"]) === "login") {
+        try {
+
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+            $loginSuccess = $user->login($username, $password);
+
+            if ($loginSuccess) {
+                header("Location: index.php");
+                exit;
+            } else {
+                $message = "Username or Password is incorrect";
+            }
+
+        } catch (Exception $e) {
+            $message = "An error occurred. Please try again.";
+        }
+    }
+?>
 
 <div class="col-md-6">
     <div class="feature">
@@ -46,5 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? '') === "login
             </div>
             <button type="submit" class="button">Log In</button>
         </form>
+
+        <?php if (!empty($message)): ?>
+
+            <p><?= htmlspecialchars($message) ?></p>
+
+        <?php endif; ?>
+
     </div>
 </div>

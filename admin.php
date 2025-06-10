@@ -1,24 +1,24 @@
 <?php
+    use Projekt_Szarka\Movie;
 
-use Projekt_Szarka\Movie;
+    require_once "parts/functions.php";
 
-require_once "parts/functions.php";
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+    if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+        header("Location: index.php");
+        exit;
+    }
 
-if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
-    header("Location: index.php");
-    exit;
-}
-$movie = new Movie();
-$message = "";
+    $movie = new Movie();
+    $message = "";
 
-require_once "parts/movieOperations/newM.php";
-require_once "parts/movieOperations/editM.php";
-require_once "parts/movieOperations/deleteM.php";
-require_once "parts/movieOperations/getM.php";
+    require_once "parts/movieOperations/newM.php";
+    require_once "parts/movieOperations/editM.php";
+    require_once "parts/movieOperations/deleteM.php";
+    require_once "parts/movieOperations/getM.php";
 ?>
 
 <!DOCTYPE html>
@@ -34,10 +34,10 @@ require_once "parts/movieOperations/getM.php";
 
 <div id="site-content">
     <?php
-    $file_path = "parts/header.php";
-    if (!include($file_path)) {
-        echo "Failed to include $file_path";
-    }
+        $file_path = "parts/header.php";
+        if (!include($file_path)) {
+            echo "Failed to include $file_path";
+        }
     ?>
 
     <main class="main-content">
@@ -152,10 +152,10 @@ require_once "parts/movieOperations/getM.php";
     </main>
 
     <?php
-    $file_path = "parts/footer.php";
-    if (!include($file_path)) {
-        echo "Failed to include $file_path";
-    }
+        $file_path = "parts/footer.php";
+        if (!include($file_path)) {
+            echo "Failed to include $file_path";
+        }
     ?>
 </div>
 

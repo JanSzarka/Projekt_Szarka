@@ -31,10 +31,10 @@
 
 		<div id="site-content">
             <?php
-            $file_path = "parts/header.php";
-            if(!include($file_path)) {
-                echo"Failed to include $file_path";
-            }
+                $file_path = "parts/header.php";
+                if(!include($file_path)) {
+                    echo"Failed to include $file_path";
+                }
             ?>
 			<main class="main-content">
 				<div class="container">
@@ -78,10 +78,10 @@
 				</div> <!-- .container -->
 			</main>
             <?php
-            $file_path = "parts/footer.php";
-            if(!include($file_path)) {
-                echo"Failed to include $file_path";
-            }
+                $file_path = "parts/footer.php";
+                if(!include($file_path)) {
+                    echo"Failed to include $file_path";
+                }
             ?>
 		</div>
 		<!-- Default snippet for navigation -->

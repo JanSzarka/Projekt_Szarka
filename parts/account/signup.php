@@ -1,26 +1,24 @@
 <?php
-require_once __DIR__ . '/../functions.php';
+    require_once __DIR__ . '/../functions.php';
 
-use Projekt_Szarka\User;
+    use Projekt_Szarka\User;
 
-$user = new User();
-$message = "";
+    $user = new User();
+    $message = "";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? '') === "signup") {
-    $username = $_POST["username"] ?? '';
-    $password = $_POST["password"] ?? '';
-    $check = $user->saveUser($username, $password);
-    if ($check) {
-        $message = $check;
-    } else {
-        $message = "Error creating account.";
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? '') === "signup") {
+
+        $username = $_POST["username"] ?? '';
+        $password = $_POST["password"] ?? '';
+        $check = $user->saveUser($username, $password);
+
+        if ($check) {
+            $message = $check;
+        } else {
+            $message = "Error creating account.";
+        }
     }
-}
 ?>
-
-<?php if (!empty($message)): ?>
-    <p><?= htmlspecialchars($message) ?></p>
-<?php endif; ?>
 
 <div class="col-md-6">
     <div class="feature">
@@ -37,5 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? '') === "signu
             </div>
             <button type="submit" class="button">Sign Up</button>
         </form>
+
+        <?php if (!empty($message)): ?>
+
+            <p><?= htmlspecialchars($message) ?></p>
+
+        <?php endif; ?>
+
     </div>
 </div>

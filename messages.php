@@ -1,19 +1,18 @@
 <?php
+    use Projekt_Szarka\Message;
 
-use Projekt_Szarka\Message;
+    require_once "parts/functions.php";
 
-require_once "parts/functions.php";
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
-    header("Location: index.php");
-    exit;
-}
-$txt = new Message();
-$messages = $txt->getAllMessages();
+    if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+        header("Location: index.php");
+        exit;
+    }
+    $txt = new Message();
+    $messages = $txt->getAllMessages();
 ?>
 
 
@@ -30,10 +29,10 @@ $messages = $txt->getAllMessages();
 
 <div id="site-content">
     <?php
-    $file_path = "parts/header.php";
-    if (!include($file_path)) {
-        echo "Failed to include $file_path";
-    }
+        $file_path = "parts/header.php";
+        if (!include($file_path)) {
+            echo "Failed to include $file_path";
+        }
     ?>
 
     <main class="main-content">
@@ -60,7 +59,6 @@ $messages = $txt->getAllMessages();
                         } else {
                             echo '<p>No messages found.</p>';
                         }
-
                     ?>
 
                 </div>
@@ -69,10 +67,10 @@ $messages = $txt->getAllMessages();
     </main>
 
 <?php
-$file_path = "parts/footer.php";
-if (!include($file_path)) {
-    echo "Failed to include $file_path";
-}
+    $file_path = "parts/footer.php";
+    if (!include($file_path)) {
+        echo "Failed to include $file_path";
+    }
 ?>
 </div>
 

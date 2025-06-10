@@ -1,9 +1,9 @@
 <?php
-require_once "parts/functions.php";
+    require_once "parts/functions.php";
 
-use Projekt_Szarka\Movie;
+    use Projekt_Szarka\Movie;
 
-$movieHandler = new Movie();
+    $movieHandler = new Movie();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,10 +34,10 @@ $movieHandler = new Movie();
 
 		<div id="site-content">
             <?php
-            $file_path = "parts/header.php";
-            if(!include($file_path)) {
-                echo"Failed to include $file_path";
-            }
+                $file_path = "parts/header.php";
+                if(!include($file_path)) {
+                    echo"Failed to include $file_path";
+                }
             ?>
 			<main class="main-content">
 				<div class="container">
@@ -55,10 +55,10 @@ $movieHandler = new Movie();
 				</div> <!-- .container -->
 			</main>
             <?php
-            $file_path = "parts/footer.php";
-            if(!include($file_path)) {
-                echo"Failed to include $file_path";
-            }
+                $file_path = "parts/footer.php";
+                if(!include($file_path)) {
+                    echo"Failed to include $file_path";
+                }
             ?>
 		</div>
 		<!-- Default snippet for navigation -->
