@@ -32,11 +32,13 @@ class DataLoader
 
 ?>
 
-//DATABASE
+
 
 <?php
+    //DATABASE
     namespace Projekt_Szarka;
 
+    use mysql_xdevapi\Exception;
     use PDO;
     use PDOException;
 
@@ -86,7 +88,7 @@ class DataLoader
             $this->connection = $this->getConnection();
         }
 
-        public function SaveUser($username, $password){
+        public function saveUser($username, $password){
 
             $sqlCheck = "SELECT COUNT(*) FROM accounts WHERE username = :username";
             $stmtCheck = $this->connection->prepare($sqlCheck);
@@ -108,6 +110,30 @@ class DataLoader
                 return false;
             }
 
+
+        }
+
+        public function login($username, $password){
+            $sql = "SELECT * FROM accounts WHERE username = :username";
+            $stmtCheck = $this->connection->prepare($sql);
+            $stmtCheck->bindParam(':username', $username);
+            $stmtCheck->execute();
+            $user = $stmtCheck->fetch();
+
+            if (!$user) {
+                return false;
+            }
+
+            $storedPassword = $user["password"];
+
+            if  (!password_verify($password, $storedPassword)) {
+                return false;
+            }
+
+            session_start();
+            $_SESSION["username"] = $user["username"];
+            $_SESSION["role"] = $user["type"];
+            return true;
 
         }
 

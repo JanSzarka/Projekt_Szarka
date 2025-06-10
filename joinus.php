@@ -48,25 +48,11 @@
 
                             <div class="row">
                                 <!-- Login Form -->
-                                <div class="col-md-6">
-                                    <div class="feature">
-                                        <h3 class="feature-title">Login</h3>
-                                        <form action="login.php" method="POST">
-                                            <div class="form-group">
-                                                <label for="login-username">Username:</label>
-                                                <input type="text" id="login-username" name="username" required class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="login-password">Password:</label>
-                                                <input type="password" id="login-password" name="password" required class="form-control">
-                                            </div>
-                                            <button type="submit" class="button">Log In</button>
-                                        </form>
-                                    </div>
-                                </div>
+                                <?php require_once "parts/login.php" ?>
 
                                 <!-- Sign-Up Form -->
                                 <?php require_once "parts/signup.php" ?>
+
 
                             </div>
                         </div>

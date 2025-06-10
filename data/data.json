@@ -4,7 +4,8 @@
     { "url": "about.php", "label": "About" },
     { "url": "review.php", "label": "Movie reviews" },
     { "url": "joinus.php", "label": "Join us" },
-    { "url": "contact.php", "label": "Contact" }
+    { "url": "contact.php", "label": "Contact" },
+    { "url": "admin.php", "label": "Admin Panel", "adminOnly": true }
   ],
   "slides": [
     { "src": "dummy/slide-1.jpg", "alt": "Slide 1" },

@@ -4,14 +4,11 @@ require_once "functions.php";
 use Projekt_Szarka\User;
 
 $user = new User();
-
 $message = "";
 
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? '') === "signup") {
     $username = $_POST["username"] ?? '';
     $password = $_POST["password"] ?? '';
-
     $check = $user->saveUser($username, $password);
     if ($check) {
         $message = $check;
@@ -20,6 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
+
+<?php if (!empty($message)): ?>
+    <p><?= htmlspecialchars($message) ?></p>
+<?php endif; ?>
 
 <div class="col-md-6">
     <div class="feature">
@@ -38,5 +39,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </form>
     </div>
 </div>
-
-<p><?= htmlspecialchars($message) ?></p>
