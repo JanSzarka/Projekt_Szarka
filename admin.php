@@ -15,10 +15,10 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 $movie = new Movie();
 $message = "";
 
-require_once "parts/newM.php";
-require_once "parts/editM.php";
-require_once "parts/deleteM.php";
-require_once "parts/getM.php";
+require_once "parts/movieOperations/newM.php";
+require_once "parts/movieOperations/editM.php";
+require_once "parts/movieOperations/deleteM.php";
+require_once "parts/movieOperations/getM.php";
 ?>
 
 <!DOCTYPE html>

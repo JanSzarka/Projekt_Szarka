@@ -1,5 +1,5 @@
 <?php
-    require_once ("parts/sendContact.php");
+    require_once("parts/contact/sendContact.php");
 ?>
 
 <!DOCTYPE html>

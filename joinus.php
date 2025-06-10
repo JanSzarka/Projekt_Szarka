@@ -48,10 +48,10 @@
 
                             <div class="row">
                                 <!-- Login Form -->
-                                <?php require_once "parts/login.php" ?>
+                                <?php require_once "parts/account/login.php" ?>
 
                                 <!-- Sign-Up Form -->
-                                <?php require_once "parts/signup.php" ?>
+                                <?php require_once "parts/account/signup.php" ?>
 
 
                             </div>

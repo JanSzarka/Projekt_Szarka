@@ -313,5 +313,12 @@ class DataLoader
                 return null;
             }
         }
+
+        public function getAllMessages() {
+            $sql = "SELECT name, email, message FROM messages ORDER BY id DESC";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>

@@ -9,12 +9,12 @@
             </div>
             <div class="col-md-2">
                 <div class="widget">
-                    <h3 class="widget-title">Recent Review</h3>
+                    <h3 class="widget-title">Reviews</h3>
                     <ul class="no-bullet">
-                        <li><a href="#">Lorem ipsum dolor</a></li>
-                        <li><a href="#">Sit amet consecture</a></li>
-                        <li><a href="#">Dolorem respequem</a></li>
-                        <li><a href="#">Invenore veritae</a></li>
+                        <li><a href="review.php">Lorem ipsum dolor</a></li>
+                        <li><a href="review.php">Sit amet consecture</a></li>
+                        <li><a href="review.php">Dolorem respequem</a></li>
+                        <li><a href="review.php">Invenore veritae</a></li>
                     </ul>
                 </div>
             </div>
