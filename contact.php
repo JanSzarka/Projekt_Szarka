@@ -1,3 +1,7 @@
+<?php
+    require_once ("parts/sendContact.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -58,14 +62,12 @@
 											<a href="mailto:contact@companyname.com">contact@companyname.com</a>
 										</li>
 									</ul>
-									<div class="contact-form">
-										<input type="text" class="name" placeholder="name...">
-										<input type="text" class="email" placeholder="email...">
-										<input type="text" class="website" placeholder="website...">
-										<textarea class="message" placeholder="message..."></textarea>
-										<input type="submit" value="Send Message ">
-
-									</div>
+                                    <form class="contact-form" method="post" action="">
+                                        <input type="text" name="name" class="name" placeholder="name..." required>
+                                        <input type="email" name="email" class="email" placeholder="email..." required>
+                                        <textarea name="message" class="message" placeholder="message..." required></textarea>
+                                        <input type="submit" name="submit_contact" value="Send Message">
+                                    </form>
 								</div>
 								<div class="col-md-7 col-md-offset-1">
 									<div class="map"></div>

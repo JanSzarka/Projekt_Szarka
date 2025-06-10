@@ -6,7 +6,7 @@ class DataLoader
     private string $filepath;
     private array $data = [];
 
-    public function __construct(string $filepath)
+    public function __construct($filepath)
     {
         $this->filepath = $filepath;
         $this->loadData();
@@ -24,7 +24,7 @@ class DataLoader
         $this->data = $decoded;
     }
 
-    public function getSection(string $key): array
+    public function getSection($key): array
     {
         return $this->data[$key] ?? [];
     }
@@ -257,7 +257,61 @@ class DataLoader
             }
         }
 
+        public function getAllReviewsHtml(): string {
+            $output = '';
+            $sql = "SELECT * FROM movies ORDER BY id DESC";
 
+            try {
+                $stmt = $this->connection->query($sql);
+                $reviews = $stmt->fetchAll();
 
+                foreach ($reviews as $review) {
+                    $output .= '<div class="movie" style="display: flex; gap: 20px; margin-bottom: 40px;">';
+                    $output .= '<figure class="movie-poster"><img src="' . htmlspecialchars($review["image"]) . '" alt="' . htmlspecialchars($review["name"]) . '" style="width:200px;"></figure>';
+                    $output .= '<div>';
+                    $output .= '<h2 class="movie-title">' . htmlspecialchars($review["name"]) . '</h2>';
+                    $output .= '<p><strong>Premiere:</strong> ' . htmlspecialchars($review["date"]) . '</p>';
+                    $output .= '<p><strong>Rating:</strong> ' . htmlspecialchars($review["rating"]) . '</p>';
+                    $output .= '<p><strong>Category:</strong> ' . htmlspecialchars($review["category"]) . '</p>';
+                    $output .= '</div>';
+                    $output .= '</div>';
+                }
+            } catch (PDOException $e) {
+                $output = '<p>Error fetching reviews: ' . htmlspecialchars($e->getMessage()) . '</p>';
+            }
+
+            return $output;
+        }
+
+    }
+
+    class Message extends Database
+    {
+        protected $connection;
+
+        public function __construct()
+        {
+            parent::__construct();
+            $this->connection = $this->getConnection();
+        }
+
+        public function saveMessage($name, $email, $message): null
+        {
+            $sql = "INSERT INTO messages (name, email, message) VALUES (:name, :email, :message)";
+            $stmt = $this->connection->prepare($sql);
+
+            try {
+                $stmt->execute([
+                    ':name' => $name,
+                    ':email' => $email,
+                    ':message' => $message
+                ]);
+                echo "<p>Message sent successfully!</p>";
+                return null;
+            } catch (PDOException $e) {
+                echo "<p>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+                return null;
+            }
+        }
     }
 ?>
